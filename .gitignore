@@ -6,7 +6,7 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
-/.DS_Store
+.DS_Store
 
 # Created by https://www.toptal.com/developers/gitignore/api/pycharm
 # Edit at https://www.toptal.com/developers/gitignore?templates=pycharm
