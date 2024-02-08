@@ -2,6 +2,7 @@ from abc import ABC
 import pygame
 import math
 from main import CAR
+from utils import blit_rotate_center
 
 
 class AbstractCar(ABC):
@@ -19,6 +20,9 @@ class AbstractCar(ABC):
                 self.angle += self.rotation_vel
             elif right:
                 self.angle -= self.rotation_vel
+
+        def draw(self, win):
+            blit_rotate_center(win, self.img, (self.x, self.y), self.angle)
 
         def move_forward(self):
             self.vel = min(self.vel + self.accelaration, self.max_vel)
