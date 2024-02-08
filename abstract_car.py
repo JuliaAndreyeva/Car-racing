@@ -1,6 +1,7 @@
 from abc import ABC
 import pygame
 import math
+from main import CAR
 
 
 class AbstractCar(ABC):
@@ -34,3 +35,7 @@ class AbstractCar(ABC):
         def reduce_speed(self):
             self.vel = max(self.vel - self.acceleration / 2, 0)
             self.move()
+
+class PlayerCar(AbstractCar):
+    IMG = CAR
+    START_POS = (180, 200)
