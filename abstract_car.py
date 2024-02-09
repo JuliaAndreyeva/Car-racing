@@ -40,6 +40,20 @@ class AbstractCar(ABC):
         self.vel = max(self.vel - self.acceleration / 2, 0)
         self.move()
 
+    def collide(self, mask, x=0, y=0):
+        car_mask = pygame.mask.from_surface(self.img)
+        offset = (int(self.x - x), int(self.y - y))
+        poi = mask.overlap(car_mask, offset)
+        return poi
+
+    def reset(self):
+        self.x, self.y = self.START_POS
+        self.angle = 0
+        self.vel = 0
+
+    def move_backward(self):
+        self.vel = max(self.vel - self.acceleration, -self.max_vel / 2)
+        self.move()
 
 class PlayerCar(AbstractCar):
     IMG = CAR
