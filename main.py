@@ -49,22 +49,18 @@ def handle_collision(player_car, computer_car):
 
     computer_finish_poi_collide = computer_car.collide(
         FINISH_MASK, *FINISH_POSITION)
-
     if computer_finish_poi_collide != None:
         player_car.reset()
         computer_car.reset()
 
     player_finish_poi_collide = player_car.collide(
         FINISH_MASK, *FINISH_POSITION)
-
     if player_finish_poi_collide != None:
         if player_finish_poi_collide[1] == 0:
             player_car.bounce()
         else:
             player_car.reset()
             computer_car.reset()
-            print("finish")
-
 
 
 run = True
@@ -89,8 +85,6 @@ while run:
     computer_car.move()
 
     handle_collision(player_car, computer_car)
-
-
 
 print(computer_car.path)
 pygame.quit()
