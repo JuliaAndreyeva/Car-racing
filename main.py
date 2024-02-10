@@ -7,9 +7,12 @@ pygame.font.init()
 GRASS = scale_image(pygame.image.load("imgs/grass.jpg"), 2.5)
 
 TRACK = scale_image(pygame.image.load("imgs/track.png"), 0.9)
+TRACK2 = scale_image(pygame.image.load("imgs/track2.png"), 0.9)
 TRACK_BORDER = scale_image(pygame.image.load("imgs/track-border.png"), 0.9)
 TRACK_BORDER2 = scale_image(pygame.image.load("imgs/track-border2.png"), 0.9)
 TRACK_BORDER_MASK = pygame.mask.from_surface(TRACK_BORDER)
+TRACK_BORDER_MASK2 = pygame.mask.from_surface(TRACK_BORDER2)
+
 
 FINISH = pygame.image.load("imgs/finish.png")
 FINISH_MASK = pygame.mask.from_surface(FINISH)
@@ -17,7 +20,7 @@ FINISH_POSITION = (130, 250)
 
 CAR = scale_image(pygame.image.load("imgs/convertible.png"), 0.5)
 
-WIDTH, HEIGHT = TRACK.get_width(), TRACK.get_height()
+WIDTH, HEIGHT = TRACK2.get_width(), TRACK2.get_height()
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("CAR RACING!")
 
@@ -69,8 +72,8 @@ def handle_collision(player_car, computer_car):
 
 run = True
 clock = pygame.time.Clock()
-images = [(GRASS, (0, 0)), (TRACK, (0, 0)),
-          (FINISH, FINISH_POSITION), (TRACK_BORDER, (0, 0))]
+images = [(GRASS, (0, 0)), (TRACK2, (0, 0)),
+          (FINISH, FINISH_POSITION), (TRACK_BORDER2, (0, 0))]
 
 player_car = PlayerCar(4, 4)
 computer_car = ComputerCar(4, 4, PATH1)
