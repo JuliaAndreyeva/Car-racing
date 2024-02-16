@@ -8,7 +8,8 @@ import argparse
 
 parser = argparse.ArgumentParser(description="Choose your settings")
 parser.add_argument("-m", "--map", choices=['map1', 'map2'], help="Choose your map", type=str)
-parser.add_argument("-a", "--acceleration", choices=['easy', 'medium', 'hard'], help="Choose your acceleration", type=str)
+parser.add_argument("-a", "--acceleration", choices=['easy', 'medium', 'hard'],
+                    help="Choose your acceleration", type=str)
 args = parser.parse_args()
 
 
@@ -21,7 +22,14 @@ def parse_setting(args):
             finish = pygame.image.load("imgs/finish.png")
             car_position = (180, 200)
             grass = scale_image(pygame.image.load("imgs/grass2.jpg"), 2.5)
-            initial_field_ = InitialField(grass, track, track_border, finish, finish_position, car_position)
+            path1 = [(167, 109), (67, 105), (57, 193), (57, 294), (57, 376), (61, 466), (108, 535), (172, 590),
+                     (217, 642), (272, 694), (350, 726), (407, 607), (412, 528), (491, 488), (562, 493), (595, 560),
+                     (606, 644), (605, 706), (724, 726), (738, 608), (744, 492), (732, 401), (689, 367), (583, 369),
+                     (457, 366), (419, 359), (418, 264), (484, 261), (574, 267), (606, 254), (694, 260), (733, 128),
+                     (644, 72), (536, 53), (413, 65), (301, 82), (276, 201), (285, 287), (278, 378), (191, 397),
+                     (176, 305), (173, 259)]
+
+            initial_field_ = InitialField(grass, track, track_border, finish, finish_position, car_position, path1)
         elif args.map == 'map2':
             track2 = scale_image(pygame.image.load("imgs/track2-2.png"), 1.4)
             track_border2 = scale_image(pygame.image.load("imgs/track-border2-2.png"), 1.4)
@@ -29,7 +37,13 @@ def parse_setting(args):
             finish_position2 = (856, 400)
             car_position2 = (860, 360)
             grass = scale_image(pygame.image.load("imgs/grass2.jpg"), 2.5)
-            initial_field_ = InitialField(grass, track2, track_border2, finish2, finish_position2, car_position2)
+            path2 = [(853, 303), (756, 280), (648, 275), (575, 268), (495, 204), (429, 144), (322, 113), (231, 101),
+                     (140, 110), (97, 138), (81, 211), (114, 254), (200, 277), (300, 273), (366, 281), (415, 332),
+                     (462, 378), (521, 424), (553, 495), (506, 549), (403, 525), (327, 531), (234, 525), (194, 472),
+                     (151, 437), (97, 453), (76, 509), (100, 571), (127, 622), (152, 656), (287, 659), (396, 656),
+                     (491, 663), (577, 666), (640, 630), (695, 537), (775, 496), (853, 468), (886, 407)]
+
+            initial_field_ = InitialField(grass, track2, track_border2, finish2, finish_position2, car_position2, path2)
         else:
             raise ValueError("Invalid map value: {}".format(args.map))
     except ValueError as e:
@@ -37,53 +51,15 @@ def parse_setting(args):
     return initial_field_
 
 
-
-
-TRACK = scale_image(pygame.image.load("imgs/track.png"), 0.9)
-TRACK2 = scale_image(pygame.image.load("imgs/track2-2.png"), 1.4)
-TRACK_BORDER = scale_image(pygame.image.load("imgs/track-border.png"), 0.9)
-TRACK_BORDER2 = scale_image(pygame.image.load("imgs/track-border2-2.png"), 1.4)
-TRACK_BORDER_MASK = pygame.mask.from_surface(TRACK_BORDER)
-TRACK_BORDER_MASK2 = pygame.mask.from_surface(TRACK_BORDER2)
-
-
-#FINISH = pygame.image.load("imgs/finish.png")
-FINISH = scale_image(pygame.image.load("imgs/finish.png"), 0.6)
-FINISH_MASK = pygame.mask.from_surface(FINISH)
-# FINISH_POSITION = (130, 250)
-# FINISH_POSITION = (860, 500)
-FINISH_POSITION = (856, 400)
-
-
-CAR = scale_image(pygame.image.load("imgs/convertible.png"), 0.5)
-
 field = parse_setting(args)
 pygame.font.init()
 pygame.init()
-
-
-#TRACK = scale_image(pygame.image.load("imgs/track.png"), 0.9)
-#TRACK2 = scale_image(pygame.image.load("imgs/track2.png"), 1.4)
-#TRACK_BORDER = scale_image(pygame.image.load("imgs/track-border.png"), 0.9)
-#TRACK_BORDER2 = scale_image(pygame.image.load("imgs/track-border2.png"), 1.4)
-#TRACK_BORDER_MASK = pygame.mask.from_surface(TRACK_BORDER)
-#TRACK_BORDER_MASK2 = pygame.mask.from_surface(TRACK_BORDER2)
-#FINISH1 = pygame.image.load("imgs/finish.png")
-#FINISH2 = scale_image(pygame.image.load("imgs/finish.png"), 0.6)
-#FINISH_MASK = pygame.mask.from_surface(FINISH2)
-#FINISH_POSITION = (130, 250)
-#FINISH_POSITION = (860, 500)
-#WIDTH, HEIGHT = TRACK2.get_width(), TRACK2.get_height()
 
 
 WIN = pygame.display.set_mode((field.width, field.height))
 pygame.display.set_caption("CAR RACING!")
 
 FPS = 60
-# PATH1 = [(175, 119), (110, 70), (56, 133), (70, 481), (318, 731), (404, 680), (418, 521), (507, 475), (600, 551), (613, 715), (736, 713),
-#         (734, 399), (611, 357), (409, 343), (433, 257), (697, 258), (738, 123), (581, 71), (303, 78), (275, 377), (176, 388), (178, 260)]
-PATH1 = [(167, 109), (67, 105), (57, 193), (57, 294), (57, 376), (61, 466), (108, 535), (172, 590), (217, 642), (272, 694), (350, 726)]
-
 MAIN_FONT = pygame.font.SysFont("comicsans", 44)
 
 
@@ -132,7 +108,7 @@ images = [(field.grass, (0, 0)), (field.track, (0, 0)),
           (field.finish, field.finish_position), (field.track_border, (0, 0))]
 
 player_car = PlayerCar(4, 4, field.car_position, 0.1)
-computer_car = ComputerCar(4, 4, PATH1, field.car_position, 0.5)
+computer_car = ComputerCar(4, 4, field.path, field.car_position, 0.5)
 
 #player_car = PlayerCar(4, 4, (860, 450))
 #computer_car = ComputerCar(4, 4, PATH1, (860, 450))

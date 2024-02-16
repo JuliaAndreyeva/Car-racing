@@ -2,7 +2,7 @@ import pygame
 
 
 class InitialField():
-    def __init__(self, grass, track, track_border, finish, finish_position, car_position):
+    def __init__(self, grass, track, track_border, finish, finish_position, car_position, path):
         self.grass = grass
         self.track = track
         self.track_border = track_border
@@ -13,3 +13,4 @@ class InitialField():
         self.width = track.get_width()
         self.height = track.get_height()
         self.car_position = car_position
+        self.path = path
