@@ -1,6 +1,6 @@
 from abstract_car import *
 
-CAR = scale_image(pygame.image.load("imgs/car2.png"), 0.02)
+CAR = scale_image(pygame.image.load("imgs/car2.png"), 0.047)
 
 
 class ComputerCar(AbstractCar):
@@ -16,11 +16,11 @@ class ComputerCar(AbstractCar):
 
     def draw_points(self, win):
         for point in self.path:
-            pygame.draw.circle(win, (255, 0, 0), point, 5)
+            pygame.draw.circle(win, (255, 0, 0), point, 7)
 
     def draw(self, win):
         super().draw(win)
-        # self.draw_points(win)
+        self.draw_points(win)
 
     def calculate_angle(self):
         target_x, target_y = self.path[self.current_point]
