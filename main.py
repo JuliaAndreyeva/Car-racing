@@ -5,6 +5,7 @@ from computer_car import *
 from initial_field import InitialField
 import argparse
 from game_info import *
+from pygame import mixer
 pygame.font.init()
 MAIN_FONT = pygame.font.SysFont("comicsans", 44)
 
@@ -14,6 +15,9 @@ parser.add_argument("-a", "--acceleration", choices=['easy', 'medium', 'hard'],
                     help="Choose your acceleration", type=str)
 args = parser.parse_args()
 
+mixer.init()
+mixer.music.load("music/Dua Lipa - Levitating.mp3")
+mixer.music.play()
 
 def parse_setting(args):
     try:
