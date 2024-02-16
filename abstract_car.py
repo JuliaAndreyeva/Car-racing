@@ -3,7 +3,8 @@ import pygame
 import math
 from utils import blit_rotate_center, scale_image
 
-CAR = scale_image(pygame.image.load("imgs/convertible.png"), 0.05)
+
+CAR = scale_image(pygame.image.load("imgs/car1.png"), 0.05)
 
 
 class AbstractCar(ABC):

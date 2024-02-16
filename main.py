@@ -30,7 +30,25 @@ def parse_setting(args):
     return initial_field_
 
 
-GRASS = scale_image(pygame.image.load("imgs/grass.jpg"), 2.5)
+
+GRASS = scale_image(pygame.image.load("imgs/grass2.jpg"), 2.5)
+
+TRACK = scale_image(pygame.image.load("imgs/track.png"), 0.9)
+TRACK2 = scale_image(pygame.image.load("imgs/track2-2.png"), 1.4)
+TRACK_BORDER = scale_image(pygame.image.load("imgs/track-border.png"), 0.9)
+TRACK_BORDER2 = scale_image(pygame.image.load("imgs/track-border2-2.png"), 1.4)
+TRACK_BORDER_MASK = pygame.mask.from_surface(TRACK_BORDER)
+TRACK_BORDER_MASK2 = pygame.mask.from_surface(TRACK_BORDER2)
+
+
+#FINISH = pygame.image.load("imgs/finish.png")
+FINISH = scale_image(pygame.image.load("imgs/finish.png"), 0.6)
+FINISH_MASK = pygame.mask.from_surface(FINISH)
+#FINISH_POSITION = (130, 250)
+# FINISH_POSITION = (860, 500)
+FINISH_POSITION = (856, 400)
+
+
 CAR = scale_image(pygame.image.load("imgs/convertible.png"), 0.5)
 
 field = parse_setting(args)
@@ -111,6 +129,12 @@ computer_car = ComputerCar(4, 4, PATH1, (180, 200), 0.5)
 
 #player_car = PlayerCar(4, 4, (860, 450))
 #computer_car = ComputerCar(4, 4, PATH1, (860, 450))
+
+# player_car = PlayerCar(4, 4, (890, 450))
+# computer_car = ComputerCar(4, 4, PATH1, (860, 450))
+
+# player_car = PlayerCar(4, 4, (890, 360))
+# computer_car = ComputerCar(4, 4, PATH1, (860, 360))
 
 while run:
     clock.tick(FPS)

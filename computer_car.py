@@ -1,6 +1,6 @@
 from abstract_car import *
 
-CAR = scale_image(pygame.image.load("imgs/convertible.png"), 0.05)
+CAR = scale_image(pygame.image.load("imgs/car2.png"), 0.02)
 
 
 class ComputerCar(AbstractCar):
