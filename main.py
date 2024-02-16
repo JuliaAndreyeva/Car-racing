@@ -4,7 +4,9 @@ from utils import *
 from computer_car import *
 from initial_field import InitialField
 import argparse
-
+from game_info import *
+pygame.font.init()
+MAIN_FONT = pygame.font.SysFont("comicsans", 44)
 
 parser = argparse.ArgumentParser(description="Choose your settings")
 parser.add_argument("-m", "--map", choices=['map1', 'map2'], help="Choose your map", type=str)
@@ -60,7 +62,7 @@ WIN = pygame.display.set_mode((field.width, field.height))
 pygame.display.set_caption("CAR RACING!")
 
 FPS = 60
-MAIN_FONT = pygame.font.SysFont("comicsans", 44)
+# MAIN_FONT = pygame.font.SysFont("comicsans", 44)
 
 
 def move_player(player_car):
@@ -82,13 +84,17 @@ def move_player(player_car):
         player_car.reduce_speed()
 
 
-def handle_collision(player_car, computer_car):
+def handle_collision(player_car, computer_car, game_info):
     if player_car.collide(field.track_border_mask) != None:
         player_car.bounce()
 
     computer_finish_poi_collide = computer_car.collide(
         field.finish_mask, *field.finish_position)
     if computer_finish_poi_collide != None:
+        blit_text_center(WIN, MAIN_FONT, "You lost!")
+        pygame.display.update()
+        pygame.time.wait(5000)
+        game_info.reset()
         player_car.reset()
         computer_car.reset()
 
@@ -98,6 +104,7 @@ def handle_collision(player_car, computer_car):
         if player_finish_poi_collide[1] == 0:
             player_car.bounce()
         else:
+            game_info.next_level()
             player_car.reset()
             computer_car.reset()
 
@@ -108,7 +115,8 @@ images = [(field.grass, (0, 0)), (field.track, (0, 0)),
           (field.finish, field.finish_position), (field.track_border, (0, 0))]
 
 player_car = PlayerCar(4, 4, field.car_position, 0.1)
-computer_car = ComputerCar(4, 4, field.path, field.car_position, 0.5)
+computer_car = ComputerCar(2, 4, field.path, field.car_position, 0.5)
+game_info = GameInfo()
 
 #player_car = PlayerCar(4, 4, (860, 450))
 #computer_car = ComputerCar(4, 4, PATH1, (860, 450))
@@ -122,22 +130,39 @@ computer_car = ComputerCar(4, 4, field.path, field.car_position, 0.5)
 while run:
     clock.tick(FPS)
 
-    draw(WIN, images, player_car, computer_car)
+    draw(WIN, images, player_car, computer_car, field, game_info)
+    while not game_info.started:
+        blit_text_center(
+            WIN, MAIN_FONT, f"Press any key to start level {game_info.level}!")
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                break
+
+        if event.type == pygame.KEYDOWN:
+            game_info.start_level()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
             break
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = pygame.mouse.get_pos()
-            computer_car.path.append(pos)
+        # if event.type == pygame.MOUSEBUTTONDOWN:
+        #     pos = pygame.mouse.get_pos()
+        #     computer_car.path.append(pos)
 
     move_player(player_car)
     computer_car.move()
 
-    handle_collision(player_car, computer_car)
+    handle_collision(player_car, computer_car, game_info)
+    if game_info.game_finished():
+        blit_text_center(WIN, MAIN_FONT, "You won the game!")
+        pygame.time.wait(5000)
+        game_info.reset()
+        player_car.reset()
+        computer_car.reset()
 
 
-print(computer_car.path)
+# print(computer_car.path)
 pygame.quit()
