@@ -1,35 +1,63 @@
-import pygame
+from pygame import *
 from utils import *
 from abstract_car import *
 from computer_car import *
-pygame.font.init()
+from initial_field import InitialField
+import argparse
+
+
+parser = argparse.ArgumentParser(description="Choose your settings")
+parser.add_argument("-m", "--map", choices=['map1', 'map2'], help="Choose your map", type=str)
+parser.add_argument("-a", "--acceleration", choices=['easy', 'medium', 'hard'], help="Choose your acceleration", type=str)
+args = parser.parse_args()
+
+def parse_setting(args):
+    if (args.map == 'map1'):
+        TRACK = scale_image(pygame.image.load("imgs/track.png"), 0.9)
+        TRACK_BORDER = scale_image(pygame.image.load("imgs/track-border.png"), 0.9)
+        FINISH_POSITION = (130, 250)
+        FINISH = pygame.image.load("imgs/finish.png")
+        initial_field_ = InitialField(GRASS, TRACK, TRACK_BORDER, FINISH, FINISH_POSITION)
+    elif(args.map == 'map2'):
+        TRACK2 = scale_image(pygame.image.load("imgs/track2.png"), 0.9)
+        TRACK_BORDER2 = scale_image(pygame.image.load("imgs/track-border2.png"), 0.9)
+        FINISH2 = scale_image(pygame.image.load("imgs/finish.png"), 0.6)
+        FINISH_POSITION2 = (860, 500)
+        initial_field_ = InitialField(GRASS, TRACK2, TRACK_BORDER2, FINISH2, FINISH_POSITION2)
+    else:
+        return -1;
+
+    return initial_field_
+
 
 GRASS = scale_image(pygame.image.load("imgs/grass.jpg"), 2.5)
-
-TRACK = scale_image(pygame.image.load("imgs/track.png"), 0.9)
-TRACK2 = scale_image(pygame.image.load("imgs/track2.png"), 1.4)
-TRACK_BORDER = scale_image(pygame.image.load("imgs/track-border.png"), 0.9)
-TRACK_BORDER2 = scale_image(pygame.image.load("imgs/track-border2.png"), 1.4)
-TRACK_BORDER_MASK = pygame.mask.from_surface(TRACK_BORDER)
-TRACK_BORDER_MASK2 = pygame.mask.from_surface(TRACK_BORDER2)
-
-
-#FINISH = pygame.image.load("imgs/finish.png")
-FINISH = scale_image(pygame.image.load("imgs/finish.png"), 0.6)
-FINISH_MASK = pygame.mask.from_surface(FINISH)
-#FINISH_POSITION = (130, 250)
-FINISH_POSITION = (860, 500)
-
 CAR = scale_image(pygame.image.load("imgs/convertible.png"), 0.5)
 
-WIDTH, HEIGHT = TRACK2.get_width(), TRACK2.get_height()
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+field = parse_setting(args)
+pygame.font.init()
+pygame.init()
+
+
+#TRACK = scale_image(pygame.image.load("imgs/track.png"), 0.9)
+#TRACK2 = scale_image(pygame.image.load("imgs/track2.png"), 1.4)
+#TRACK_BORDER = scale_image(pygame.image.load("imgs/track-border.png"), 0.9)
+#TRACK_BORDER2 = scale_image(pygame.image.load("imgs/track-border2.png"), 1.4)
+#TRACK_BORDER_MASK = pygame.mask.from_surface(TRACK_BORDER)
+#TRACK_BORDER_MASK2 = pygame.mask.from_surface(TRACK_BORDER2)
+#FINISH1 = pygame.image.load("imgs/finish.png")
+#FINISH2 = scale_image(pygame.image.load("imgs/finish.png"), 0.6)
+#FINISH_MASK = pygame.mask.from_surface(FINISH2)
+#FINISH_POSITION = (130, 250)
+#FINISH_POSITION = (860, 500)
+#WIDTH, HEIGHT = TRACK2.get_width(), TRACK2.get_height()
+
+
+WIN = pygame.display.set_mode((field.width, field.height))
 pygame.display.set_caption("CAR RACING!")
 
 FPS = 60
 PATH1 = [(175, 119), (110, 70), (56, 133), (70, 481), (318, 731), (404, 680), (418, 521), (507, 475), (600, 551), (613, 715), (736, 713),
         (734, 399), (611, 357), (409, 343), (433, 257), (697, 258), (738, 123), (581, 71), (303, 78), (275, 377), (176, 388), (178, 260)]
-
 
 MAIN_FONT = pygame.font.SysFont("comicsans", 44)
 
@@ -54,17 +82,17 @@ def move_player(player_car):
 
 
 def handle_collision(player_car, computer_car):
-    if player_car.collide(TRACK_BORDER_MASK2) != None:
+    if player_car.collide(field.track_border_mask) != None:
         player_car.bounce()
 
     computer_finish_poi_collide = computer_car.collide(
-        FINISH_MASK, *FINISH_POSITION)
+        field.finish_mask, *field.finish_position)
     if computer_finish_poi_collide != None:
         player_car.reset()
         computer_car.reset()
 
     player_finish_poi_collide = player_car.collide(
-        FINISH_MASK, *FINISH_POSITION)
+        field.finish_mask, *field.finish_position)
     if player_finish_poi_collide != None:
         if player_finish_poi_collide[1] == 0:
             player_car.bounce()
@@ -75,14 +103,14 @@ def handle_collision(player_car, computer_car):
 
 run = True
 clock = pygame.time.Clock()
-images = [(GRASS, (0, 0)), (TRACK2, (0, 0)),
-          (FINISH, FINISH_POSITION), (TRACK_BORDER2, (0, 0))]
+images = [(GRASS, (0, 0)), (field.track, (0, 0)),
+          (field.finish, field.finish_position), (field.track_border, (0, 0))]
 
-#player_car = PlayerCar(4, 4, (180, 200))
-#computer_car = ComputerCar(4, 4, PATH1, (180, 200))
+player_car = PlayerCar(4, 4, (180, 200), 0.1)
+computer_car = ComputerCar(4, 4, PATH1, (180, 200), 0.5)
 
-player_car = PlayerCar(4, 4, (900, 450))
-computer_car = ComputerCar(4, 4, PATH1, (860, 450))
+#player_car = PlayerCar(4, 4, (860, 450))
+#computer_car = ComputerCar(4, 4, PATH1, (860, 450))
 
 while run:
     clock.tick(FPS)

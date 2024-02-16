@@ -4,8 +4,10 @@ import math
 from utils import blit_rotate_center, scale_image
 
 CAR = scale_image(pygame.image.load("imgs/convertible.png"), 0.05)
+
+
 class AbstractCar(ABC):
-    def __init__(self, max_vel, rotation_vel, start_pos):
+    def __init__(self, max_vel, rotation_vel, start_pos, acceleration):
         self.img = self.IMG
         self.max_vel = max_vel
         self.vel = 0
@@ -13,7 +15,7 @@ class AbstractCar(ABC):
         self.angle = 0
         self.x, self.y = start_pos
         self.start_position = start_pos
-        self.acceleration = 0.1
+        self.acceleration = acceleration
 
     def rotate(self, left=False, right=False):
         if left:
@@ -55,11 +57,13 @@ class AbstractCar(ABC):
         self.vel = max(self.vel - self.acceleration, -self.max_vel / 2)
         self.move()
 
+
 class PlayerCar(AbstractCar):
     IMG = CAR
 
-    def __init__(self, max_vel, rotation_vel, start_pos):
-        super().__init__(max_vel, rotation_vel, start_pos)
+    def __init__(self, max_vel, rotation_vel, start_pos, acceleration):
+        super().__init__(max_vel, rotation_vel, start_pos, acceleration)
+
     def reduce_speed(self):
         self.vel = max(self.vel - self.acceleration / 2, 0)
         self.move()

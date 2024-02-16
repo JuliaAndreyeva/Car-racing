@@ -7,11 +7,12 @@ class ComputerCar(AbstractCar):
     IMG = CAR
     #START_POS = (150, 200)
 
-    def __init__(self, max_vel, rotation_vel, path=[], start_pos=0):
-        super().__init__(max_vel, rotation_vel, start_pos)
+    def __init__(self, max_vel, rotation_vel, path=[], start_pos=0, acceleration=0.1):
+        super().__init__(max_vel, rotation_vel, start_pos, acceleration)
         self.path = path
         self.current_point = 0
         self.vel = max_vel
+
 
     def draw_points(self, win):
         for point in self.path:
