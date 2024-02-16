@@ -58,3 +58,8 @@ class ComputerCar(AbstractCar):
         self.calculate_angle()
         self.update_path_point()
         super().move()
+
+    def next_level(self, level):
+        self.reset()
+        self.vel = self.max_vel + (level - 1) * 0.2
+        self.current_point = 0

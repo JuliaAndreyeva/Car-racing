@@ -4,13 +4,17 @@ from utils import *
 from computer_car import *
 from initial_field import InitialField
 import argparse
-
+from pygame import mixer
 
 parser = argparse.ArgumentParser(description="Choose your settings")
 parser.add_argument("-m", "--map", choices=['map1', 'map2'], help="Choose your map", type=str)
 parser.add_argument("-a", "--acceleration", choices=['easy', 'medium', 'hard'],
                     help="Choose your acceleration", type=str)
 args = parser.parse_args()
+
+mixer.init()
+mixer.music.load("music/Dua Lipa - Levitating.mp3")
+mixer.music.play()
 
 
 def parse_setting(args):
