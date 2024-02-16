@@ -1,13 +1,15 @@
 import pygame
 
+
 class InitialField():
-    def __init__(self, GRASS, TRACK, TRACK_BORDER, FINISH, FINISH_POSITION):
-        self.grass = GRASS
-        self.track = TRACK
-        self.track_border = TRACK_BORDER
-        self.track_border_mask = pygame.mask.from_surface(TRACK_BORDER)
-        self.finish = FINISH
-        self.finish_mask = pygame.mask.from_surface(FINISH)
-        self.finish_position = FINISH_POSITION
-        self.width = TRACK.get_width()
-        self.height = TRACK.get_height()
+    def __init__(self, grass, track, track_border, finish, finish_position, car_position):
+        self.grass = grass
+        self.track = track
+        self.track_border = track_border
+        self.track_border_mask = pygame.mask.from_surface(track_border)
+        self.finish = finish
+        self.finish_mask = pygame.mask.from_surface(finish)
+        self.finish_position = finish_position
+        self.width = track.get_width()
+        self.height = track.get_height()
+        self.car_position = car_position
