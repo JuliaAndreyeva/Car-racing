@@ -15,9 +15,10 @@ parser.add_argument("-a", "--acceleration", choices=['easy', 'medium', 'hard'],
                     help="Choose your acceleration", type=str)
 args = parser.parse_args()
 
-mixer.init()
-mixer.music.load("music/Dua Lipa - Levitating.mp3")
-mixer.music.play()
+# mixer.init()
+# mixer.music.load("music/Dua Lipa - Levitating.mp3")
+# mixer.music.play()
+
 
 def parse_setting(args):
     try:
@@ -100,7 +101,10 @@ def handle_collision(player_car, computer_car, game_info):
         pygame.time.wait(5000)
         game_info.reset()
         player_car.reset()
-        computer_car.reset()
+        # computer_car.reset()
+        computer_car.first_level()
+        # computer_car.current_point = 0
+
 
     player_finish_poi_collide = player_car.collide(
         field.finish_mask, *field.finish_position)
@@ -110,8 +114,7 @@ def handle_collision(player_car, computer_car, game_info):
         else:
             game_info.next_level()
             player_car.reset()
-            computer_car.reset()
-
+            computer_car.next_level(game_info.level)
 
 run = True
 clock = pygame.time.Clock()
@@ -119,7 +122,7 @@ images = [(field.grass, (0, 0)), (field.track, (0, 0)),
           (field.finish, field.finish_position), (field.track_border, (0, 0))]
 
 player_car = PlayerCar(4, 4, field.car_position, 0.1)
-computer_car = ComputerCar(2, 4, field.path, field.car_position, 0.5)
+computer_car = ComputerCar(4, 4, field.path, field.car_position, 0.5)
 game_info = GameInfo()
 
 #player_car = PlayerCar(4, 4, (860, 450))
@@ -135,31 +138,29 @@ while run:
     clock.tick(FPS)
 
     draw(WIN, images, player_car, computer_car, field, game_info)
+
     while not game_info.started:
         blit_text_center(
             WIN, MAIN_FONT, f"Press any key to start level {game_info.level}!")
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
+                pygame.quit()
                 break
 
-        if event.type == pygame.KEYDOWN:
-            game_info.start_level()
+            if event.type == pygame.KEYDOWN:
+                game_info.start_level()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
             break
 
-        # if event.type == pygame.MOUSEBUTTONDOWN:
-        #     pos = pygame.mouse.get_pos()
-        #     computer_car.path.append(pos)
-
     move_player(player_car)
     computer_car.move()
 
     handle_collision(player_car, computer_car, game_info)
+
     if game_info.game_finished():
         blit_text_center(WIN, MAIN_FONT, "You won the game!")
         pygame.time.wait(5000)

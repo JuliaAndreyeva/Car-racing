@@ -32,6 +32,7 @@ def draw(win, images, player_car, computer_car, field, game_info):
     computer_car.draw(win)
     pygame.display.update()
 
+
 def blit_text_center(win, font, text):
     render = font.render(text, 1, (200, 200, 200))
     win.blit(render, (win.get_width()/2 - render.get_width() /

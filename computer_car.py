@@ -20,7 +20,7 @@ class ComputerCar(AbstractCar):
 
     def draw(self, win):
         super().draw(win)
-        self.draw_points(win)
+        # self.draw_points(win)
 
     def calculate_angle(self):
         target_x, target_y = self.path[self.current_point]
@@ -62,4 +62,9 @@ class ComputerCar(AbstractCar):
     def next_level(self, level):
         self.reset()
         self.vel = self.max_vel + (level - 1) * 0.2
+        self.current_point = 0
+
+    def first_level(self):
+        self.reset()
+        self.vel = self.max_vel
         self.current_point = 0
