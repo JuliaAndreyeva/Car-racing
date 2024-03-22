@@ -1,11 +1,10 @@
-import sys
-import os
+# import sys
+# import os
 import pytest
 import pygame
 import math
-from computer_car import ComputerCar
-
-sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+import computer_car
+# sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 
 
 class TestComputerCar:
@@ -19,7 +18,7 @@ class TestComputerCar:
         acceleration = 1
         path = [(150, 150), (200, 200), (250, 250)]  # Припустимо, що це ваш шлях
         img = pygame.Surface((20, 20))
-        return ComputerCar(img, max_vel, rotation_vel, path, start_pos, acceleration)
+        return computer_car.ComputerCar(img, max_vel, rotation_vel, path, start_pos, acceleration)
 
     def test_draw_points(self, computer_car):
         # Створюємо віртуальне вікно для тестування малювання

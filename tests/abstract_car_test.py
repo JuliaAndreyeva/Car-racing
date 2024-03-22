@@ -1,9 +1,9 @@
-import sys
-import os
+# import sys
+# import os
 import pytest
 import pygame
-from abstract_car import AbstractCar
-sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+import abstract_car
+# sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 
 
 class TestAbstractCar:
@@ -15,7 +15,7 @@ class TestAbstractCar:
         start_pos = (100, 100)
         acceleration = 1
         CAR = pygame.image.load("imgs/car2.png")
-        return AbstractCar(max_vel, rotation_vel, start_pos, acceleration, CAR)
+        return abstract_car.AbstractCar(max_vel, rotation_vel, start_pos, acceleration, CAR)
 
     def test_rotate_left(self, car):
         car.rotate(left=True)

@@ -1,6 +1,6 @@
 import pygame
 import unittest
-from initial_field import InitialField
+import initial_field
 
 
 class TestInitialField(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestInitialField(unittest.TestCase):
         path = [(10, 10), (20, 20), (30, 30)]
 
         # Створення об'єкту InitialField для тестування
-        self.initial_field = InitialField(grass_surface, track_surface, track_border_surface, finish_surface, finish_position, car_position, path)
+        self.initial_field = initial_field.InitialField(grass_surface, track_surface, track_border_surface, finish_surface, finish_position, car_position, path)
 
     def test_initialization(self):
         # Перевірка правильності ініціалізації атрибутів
