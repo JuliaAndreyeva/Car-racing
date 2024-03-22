@@ -2,6 +2,7 @@ import sys
 import os
 import pytest
 import pygame
+import math
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 
@@ -18,7 +19,8 @@ class TestComputerCar:
         start_pos = (100, 100)
         acceleration = 1
         path = [(150, 150), (200, 200), (250, 250)]  # Припустимо, що це ваш шлях
-        return ComputerCar(max_vel, rotation_vel, path, start_pos, acceleration)
+        img = pygame.Surface((20, 20))
+        return ComputerCar(img, max_vel, rotation_vel, path, start_pos, acceleration)
 
     def test_draw_points(self, computer_car):
         # Створюємо віртуальне вікно для тестування малювання
@@ -62,5 +64,20 @@ class TestComputerCar:
         computer_car.angle = 90
         computer_car.current_point = 1
         computer_car.calculate_angle()
-        expected_angle = 95
+        target_x, target_y = computer_car.path[computer_car.current_point]
+        x_diff = target_x - computer_car.x
+        y_diff = target_y - computer_car.y
+
+        if y_diff == 0:
+            desired_radian_angle = math.pi / 2
+        else:
+            desired_radian_angle = math.atan(x_diff / y_diff)
+
+        if target_y > computer_car.y:
+            desired_radian_angle += math.pi
+
+        expected_angle = math.degrees(desired_radian_angle) - 130
         assert computer_car.angle == expected_angle
+
+
+
