@@ -1,10 +1,10 @@
-# from pygame import *
-from utils import *
-# from abstract_car import *
-from computer_car import *
+import pygame
+from utils import blit_text_center, draw, scale_image
+from abstract_car import PlayerCar
+from computer_car import ComputerCar
 from initial_field import InitialField
 import argparse
-from game_info import *
+from game_info import GameInfo
 from pygame import mixer
 pygame.font.init()
 MAIN_FONT = pygame.font.SysFont("comicsans", 44)
@@ -91,12 +91,12 @@ def move_player(player_car):
 
 
 def handle_collision(player_car, computer_car, game_info):
-    if player_car.collide(field.track_border_mask) != None:
+    if player_car.collide(field.track_border_mask) is not None:
         player_car.bounce()
 
     computer_finish_poi_collide = computer_car.collide(
         field.finish_mask, *field.finish_position)
-    if computer_finish_poi_collide != None:
+    if computer_finish_poi_collide is not None:
         blit_text_center(WIN, MAIN_FONT, "You lost!")
         pygame.display.update()
         pygame.time.wait(5000)
@@ -107,7 +107,7 @@ def handle_collision(player_car, computer_car, game_info):
         # computer_car.current_point = 0
 
     player_finish_poi_collide = player_car.collide(field.finish_mask, *field.finish_position)
-    if player_finish_poi_collide != None:
+    if player_finish_poi_collide is not None:
         if player_finish_poi_collide[1] == 0:
             player_car.bounce()
         else:

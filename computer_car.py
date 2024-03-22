@@ -1,4 +1,7 @@
-from abstract_car import *
+from abstract_car import AbstractCar
+from utils import scale_image
+import pygame
+import math
 
 CAR = scale_image(pygame.image.load("imgs/car2.png"), 0.047)
 
@@ -14,7 +17,6 @@ class ComputerCar(AbstractCar):
         self.vel = max_vel
         # self.img = self.IMG
         self.img = self.img
-
 
     def draw_points(self, win):
         for point in self.path:
