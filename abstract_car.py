@@ -8,8 +8,8 @@ CAR = scale_image(pygame.image.load("imgs/car1.png"), 0.04)
 
 
 class AbstractCar(ABC):
-    def __init__(self, max_vel, rotation_vel, start_pos, acceleration):
-        self.img = self.IMG
+    def __init__(self, max_vel, rotation_vel, start_pos, acceleration, img):
+        # self.img = self.IMG
         self.max_vel = max_vel
         self.vel = 0
         self.rotation_vel = rotation_vel
@@ -17,6 +17,7 @@ class AbstractCar(ABC):
         self.x, self.y = start_pos
         self.start_position = start_pos
         self.acceleration = acceleration
+        self.img = img
 
     def rotate(self, left=False, right=False):
         if left:
@@ -60,16 +61,17 @@ class AbstractCar(ABC):
 
 
 class PlayerCar(AbstractCar):
-    IMG = CAR
+    # IMG = CAR
 
-    def __init__(self, max_vel, rotation_vel, start_pos, acceleration):
-        super().__init__(max_vel, rotation_vel, start_pos, acceleration)
+    def __init__(self, max_vel, rotation_vel, start_pos, acceleration, img):
+        super().__init__(max_vel, rotation_vel, start_pos, acceleration, img)
+        # self.img = self.IMG
 
     def reduce_speed(self):
         self.vel = max(self.vel - self.acceleration / 2, 0)
         self.move()
 
     def bounce(self):
-        #self.vel = -0.2 * self.vel
+        # self.vel = -0.2 * self.vel
         self.vel = -self.vel
         self.move()

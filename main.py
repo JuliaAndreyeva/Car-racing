@@ -121,8 +121,13 @@ clock = pygame.time.Clock()
 images = [(field.grass, (0, 0)), (field.track, (0, 0)),
           (field.finish, field.finish_position), (field.track_border, (0, 0))]
 
-player_car = PlayerCar(4, 4, field.car_position, 0.1)
-computer_car = ComputerCar(1.3, 4, field.path, field.car_position, 0.5)
+PLAYER_CAR = scale_image(pygame.image.load("imgs/car1.png"), 0.04)
+CAR = scale_image(pygame.image.load("imgs/car2.png"), 0.047)
+
+player_car = PlayerCar(4, 4, field.car_position, 0.1, PLAYER_CAR)
+# computer_car = ComputerCar(1.3, 4, field.path, field.car_position, 0.5)
+computer_car = ComputerCar(CAR, 1.3, 4, field.path, field.car_position)
+
 game_info = GameInfo()
 
 # player_car = PlayerCar(4, 4, (860, 450))
