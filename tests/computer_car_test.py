@@ -3,10 +3,9 @@ import os
 import pytest
 import pygame
 import math
+from computer_car import ComputerCar
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
-
-from computer_car import ComputerCar
 
 
 class TestComputerCar:
@@ -78,6 +77,3 @@ class TestComputerCar:
 
         expected_angle = math.degrees(desired_radian_angle) - 130
         assert computer_car.angle == expected_angle
-
-
-

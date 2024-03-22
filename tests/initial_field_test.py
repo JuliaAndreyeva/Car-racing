@@ -2,6 +2,7 @@ import pygame
 import unittest
 from initial_field import InitialField
 
+
 class TestInitialField(unittest.TestCase):
     def setUp(self):
         # Підготовка змінних для тесту

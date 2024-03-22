@@ -1,7 +1,7 @@
 import pygame
 import pytest
 from utils import scale_image, blit_rotate_center, blit_text_center
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
 
 
 @pytest.fixture

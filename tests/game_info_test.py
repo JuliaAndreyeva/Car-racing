@@ -34,15 +34,15 @@ def test_reset(game_info):
 
 def test_game_finished(game_info):
     game_info.level = GameInfo.LEVELS + 1
-    assert game_info.game_finished() == True
+    assert game_info.game_finished() is True
 
     game_info.level = GameInfo.LEVELS
-    assert game_info.game_finished() == False
+    assert game_info.game_finished() is False
 
 
 def test_start_level(game_info):
     game_info.start_level()
-    assert game_info.started == True
+    assert game_info.started is True
     assert game_info.level_start_time > 0
 
 

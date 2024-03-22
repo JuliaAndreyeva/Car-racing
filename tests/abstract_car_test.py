@@ -2,10 +2,9 @@ import sys
 import os
 import pytest
 import pygame
-from unittest.mock import Mock
+from abstract_car import AbstractCar
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 
-from abstract_car import AbstractCar
 
 class TestAbstractCar:
     @pytest.fixture
@@ -61,4 +60,3 @@ class TestAbstractCar:
         assert car.y == 100
         assert car.angle == 0
         assert car.vel == 0
-
